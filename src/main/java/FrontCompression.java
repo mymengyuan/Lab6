@@ -32,20 +32,22 @@ public class FrontCompression {
      * @return the input compressed using front encoding
      */
     public static String compress(final String corpus) {
-        /*
-         * Defend against bad inputs.
-         */
         if (corpus == null) {
             return null;
         } else if (corpus.length() == 0) {
             return "";
         }
 
-        /*
-         * Complete this function.
-         */
+        int commonLength;
+        String[] copiedCorpus = corpus.split("\n");
+        String compressedCorpus;
 
-        return "";
+        for (int i = 1; i < copiedCorpus.length; i++) {
+            commonLength = longestPrefix(copiedCorpus[i - 1], copiedCorpus[i]);
+            copiedCorpus[i] = commonLength + "," + copiedCorpus[i];
+            }
+        compressedCorpus = String.join("\n", copiedCorpus);
+        return compressedCorpus;
     }
 
     /**
@@ -64,11 +66,22 @@ public class FrontCompression {
             return "";
         }
 
-        /*
-         * Complete this function.
-         */
 
-        return "";
+        String[] copiedCorpus = corpus.split("\n");
+        String decompressedCorpus;
+        int commonLength;
+
+        for (int i = 0; i < copiedCorpus.length; i++) {
+            String[] splited = copiedCorpus[i].split(","); // split each string into 2 strings: 1: number 2: letters
+            commonLength = Integer.parseInt(splited[i]);
+            for (j = 0; j < commonLegth; j++) {
+                String prefix += copiedCorpus[j];
+                //copiedCorpus[i] = copiedCorpus[i - 1] + copiedCorpus[i];
+            }
+
+            }
+        decompressedCorpus = String.join("\n", copiedCorpus);
+        return decompressedCorpus;
     }
 
     /**
@@ -79,10 +92,21 @@ public class FrontCompression {
      * @return the length of the common prefix between the two strings
      */
     private static int longestPrefix(final String firstString, final String secondString) {
-        /*
-         * Complete this function.
-         */
-        return 0;
+        int longestPrefix = 0;
+        if (firstString.length() <= secondString.length()) {
+            for (int i = 0; i < firstString.length(); i++) {
+                if (firstString.charAt(i) == secondString.charAt(i)) {
+                    longestPrefix += 1;
+                }
+            }
+        } else {
+            for (int i = 0; i < secondString.length(); i++) {
+                if (firstString.charAt(i) == secondString.charAt(i)) {
+                    longestPrefix += 1;
+                }
+            }
+        }
+        return longestPrefix;
     }
 
     /**
